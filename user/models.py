@@ -10,4 +10,7 @@ class User(Model):
     email = fields.CharField(50, unique=True)
     password =fields.CharField(250)
 
+class Photo(Model):
+    product_image = fields.TextField(200)
+
 Tortoise.init_models(['user.models'],'models')

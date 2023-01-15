@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from tortoise.contrib.fastapi import register_tortoise
 from user import api as UserRoute
+from user import routes as UserR
 from configs.connection import DATABASE_URL 
-
+from fastapi.staticfiles import StaticFiles
 
 
 db_url = DATABASE_URL()
@@ -11,7 +12,11 @@ db_url = DATABASE_URL()
 
 app = FastAPI()
 
-app.include_router(UserRoute.router, prefix="/user", tags=["Users"]),
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+app.include_router(UserRoute.router, tags=["API"]),
+app.include_router(UserR.router, tags=["Route"]),
+
 
 register_tortoise(
     app,
